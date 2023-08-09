@@ -1,4 +1,4 @@
-use serde::ser::{Serialize, SerializeStruct, Serializer};
+use serde::ser::{Serialize, Serializer};
 
 #[derive(Clone)]
 pub enum TaskStatus {
