@@ -11,11 +11,11 @@ class ToDoItem extends Component {
 	}
 
 	processStatus(status) {
-		return status == "PENDING" ? "edit" : "delete"
+		return status === "PENDING" ? "edit" : "delete"
 	}
 
 	inverseStatus(status) {
-		return status == "PENDING" ? "DONE" : "PENDING"
+		return status === "PENDING" ? "DONE" : "PENDING"
 	}
 
 	sendRequest = () => {
