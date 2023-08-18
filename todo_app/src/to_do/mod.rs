@@ -1,6 +1,5 @@
 pub mod task_status;
 pub mod structs;
-pub mod traits;
 
 use task_status::TaskStatus;
 use structs::{done::Done, pending::Pending};

@@ -1,0 +1,2 @@
+# DB_URL: postgres://postgres:admin%40123@localhost:5433/to_do
+DB_URL: "postgres://pocoq:admin%40123@localhost/to_do"

@@ -1,33 +1,21 @@
 use crate::{
+    database::DB,
+    diesel,
     json_serialization::{to_do_item::ToDoItem, to_do_items::ToDoItems},
-    processes::process_input,
-    state::read_file,
-    to_do::{task_status::TaskStatus, to_do_factory},
-	jwt::JwToken
+    jwt::JwToken,
+    schema::to_do,
 };
 use actix_web::{web, HttpResponse};
-use serde_json::{value::Value, Map};
+use diesel::prelude::*;
 
-pub async fn edit(to_do_item: web::Json<ToDoItem>, token: JwToken) -> HttpResponse {
-	println!("Here is the message from token: {}", token.message);
-	
-    let state: Map<String, Value> = read_file("./state.json");
-    let status: TaskStatus;
-    match &state.get(&to_do_item.title) {
-        Some(result) => {
-            status = TaskStatus::from_string(result.as_str().unwrap().to_string());
-        }
-        None => {
-            return HttpResponse::NotFound().json(format!("{} not in state", &to_do_item.title))
-        }
-    }
+pub async fn edit(to_do_item: web::Json<ToDoItem>, token: JwToken, db: DB) -> HttpResponse {
+	// let connection = establish_connection();
 
-    let existing_item = to_do_factory(to_do_item.title.as_str(), status.clone());
-    if &status.stringify()
-        == &TaskStatus::from_string(to_do_item.status.as_str().to_string()).stringify()
-    {
-        return HttpResponse::Ok().json(ToDoItems::get_state());
-    }
-    process_input(existing_item, "edit".to_owned(), &state);
+    let results = to_do::table.filter(to_do::columns::title.eq(&to_do_item.title));
+
+    let _ = diesel::update(results)
+        .set(to_do::columns::status.eq("DONE"))
+        .execute(&db.connection);
+
     return HttpResponse::Ok().json(ToDoItems::get_state());
 }
