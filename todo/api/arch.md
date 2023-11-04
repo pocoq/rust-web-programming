@@ -5,18 +5,21 @@ classDiagram
       Task <|-- Done
       Task : +String title
       Task : +TaskStatus status
-	  Task : +create()
-	  Task : +edit()
-	  Task : +delete()
-	  Task : +get()
       class Pending{
           +new(String) -> Pending
+		  +get()
+		  +create()
+		  +edit()
       }
       class Done{
           +new(String) -> Done
+		  +get()
+		  +edit()
+		  +delete()
       }
 	  TaskStatus : +enum [PENDING, DONE]
       TaskStatus : +stringify()
+	  TaskStatus : +from_string(String)
       TaskStatus : +fmtDisplay()
 	  Traits: +get()
 	  Traits: +create()

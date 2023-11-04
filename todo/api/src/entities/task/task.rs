@@ -4,3 +4,4 @@ pub struct Task {
     pub title: String,
     pub status: TaskStatus,
 }
+
