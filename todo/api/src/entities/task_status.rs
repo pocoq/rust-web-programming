@@ -1,3 +1,4 @@
+use serde::ser::{Serialize, Serializer};
 use std::fmt;
 
 pub enum TaskStatus {
@@ -26,5 +27,14 @@ impl fmt::Display for TaskStatus {
             &Self::DONE => write!(f, "DONE"),
             &Self::PENDING => write!(f, "PENDING"),
         }
+    }
+}
+
+impl Serialize for TaskStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        Ok(serializer.serialize_str(&self.stringify().as_str())?)
     }
 }

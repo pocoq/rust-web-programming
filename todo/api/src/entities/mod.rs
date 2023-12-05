@@ -10,7 +10,7 @@ pub enum ItemTypes {
     Done(Done),
 }
 
-pub fn initialize(title: &str, status: TaskStatus) -> ItemTypes {
+pub fn initialize_task(title: &str, status: TaskStatus) -> ItemTypes {
     match status {
         TaskStatus::DONE => ItemTypes::Done(Done::new(title)),
         TaskStatus::PENDING => ItemTypes::Pending(Pending::new(title)),

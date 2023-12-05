@@ -27,6 +27,19 @@ classDiagram
 	  Traits: +delete()
 ```
 
+```mermaid
+graph LR
+    B(views) --> A(main)
+    C(entities) --> A
+	D(state) --> A
+	E(processes) --> A
+	C --> B
+	D --> B
+	E --> B
+```
+
+
+
 
 
 ref: https://support.typora.io/Draw-Diagrams-With-Markdown/
